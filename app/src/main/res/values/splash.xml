@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.NuupApp.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/primary</item>
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/app_icon</item>
+    </style>
+</resources>
