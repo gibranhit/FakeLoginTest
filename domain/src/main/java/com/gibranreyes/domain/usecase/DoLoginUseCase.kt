@@ -1,6 +1,5 @@
 package com.gibranreyes.domain.usecase
 
-import com.gibranreyes.core.ext.isEmail
 import com.gibranreyes.core.util.Outcome
 import com.gibranreyes.data.repository.AuthRepository
 import com.gibranreyes.domain.R
@@ -14,10 +13,10 @@ class DoLoginUseCase @Inject constructor(
     private val resourceConverter: ResourceConverter,
 ) {
     suspend operator fun invoke(
-        email: String,
+        userName: String,
         password: String,
     ) = flow {
-        if (email.isEmail().not()) {
+        if (userName.isBlank()) {
             emit(
                 Outcome.Error(
                     resourceConverter.convertString(R.string.invalid_username),
@@ -35,7 +34,7 @@ class DoLoginUseCase @Inject constructor(
             return@flow
         }
         authRepository.doLogin(
-            email,
+            userName,
             password,
         ).collect {
             when (it) {
@@ -48,11 +47,19 @@ class DoLoginUseCase @Inject constructor(
                 }
 
                 is Outcome.Error -> {
-                    emit(
-                        Outcome.Error(
-                            it.message,
-                        ),
-                    )
+                    if (it.type == Outcome.Error.Type.CONNECTION) {
+                        emit(
+                            Outcome.Error(
+                                resourceConverter.convertString(R.string.internet_error),
+                            ),
+                        )
+                    } else {
+                        emit(
+                            Outcome.Error(
+                                it.message,
+                            ),
+                        )
+                    }
                 }
             }
         }

@@ -19,26 +19,35 @@ class LoginViewModel @Inject constructor(
     private val doLoginUseCase: DoLoginUseCase,
 ) : ViewModel() {
 
-    val emailState =
-        TextFieldState({ it.isEmail() }, { R.string.invalid_username })
+    val userNameState =
+        TextFieldState({ it.isNotBlank() }, { R.string.invalid_username })
     val passwordState =
         TextFieldState({ it.isNotBlank() }, { R.string.invalid_password })
     var state by mutableStateOf(LoginState())
         private set
 
     fun doLogin() {
+        state = state.copy(isLoading = true)
         viewModelScope.launch {
             doLoginUseCase.invoke(
-                emailState.text,
+                userNameState.text,
                 passwordState.text,
             ).collect {
                 state = when (it) {
                     is Outcome.Success -> {
-                        state.copy(data = it.data, showDialog = true)
+                        state.copy(
+                            data = it.data,
+                            showDialog = true,
+                            isLoading = false,
+                        )
                     }
 
                     is Outcome.Error -> {
-                        state.copy(error = it.message, showDialog = true)
+                        state.copy(
+                            error = it.message,
+                            showDialog = true,
+                            isLoading = false,
+                        )
                     }
                 }
             }

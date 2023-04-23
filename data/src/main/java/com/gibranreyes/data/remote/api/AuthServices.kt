@@ -8,6 +8,7 @@ import retrofit2.http.POST
 
 interface AuthServices {
     @POST("/auth/login")
+    @JvmSuppressWildcards
     suspend fun login(
         @Body body: LoginRequest,
     ): ApiResponse<LoginResponse>

@@ -2,4 +2,5 @@
 <resources>
     <string name="invalid_username">Usuario no válido.</string>
     <string name="invalid_password">Contraseña no válida.</string>
+    <string name="internet_error">No podemos continuar, revisa tu conexión a internet e intenta de nuevo</string>
 </resources>

@@ -42,6 +42,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gibranreyes.fakelogintest.R
+import com.gibranreyes.fakelogintest.ui.components.Loader
 import com.gibranreyes.fakelogintest.ui.components.OutlinedTextFieldCustom
 import com.gibranreyes.fakelogintest.ui.components.SimpleAlertDialog
 import com.gibranreyes.fakelogintest.ui.components.TextFieldState
@@ -51,7 +52,7 @@ import com.gibranreyes.fakelogintest.ui.theme.FakeLoginTestTheme
 fun LoginScreen(viewModel: LoginViewModel = hiltViewModel()) {
     LoginScreenContent(
         viewModel.state,
-        viewModel.emailState,
+        viewModel.userNameState,
         viewModel.passwordState,
         onLogin = {
             viewModel.doLogin()
@@ -70,32 +71,39 @@ fun LoginScreenContent(
     onLogin: () -> Unit,
     resetLogin: () -> Unit,
 ) {
-    // Code to Show and Dismiss Dialog
-
     val passwordFocusRequester = remember { FocusRequester() }
     val emailFocusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary),
     ) {
         Column {
             Image(
                 painter = painterResource(id = R.drawable.app_icon),
                 contentDescription = null,
-                modifier = Modifier.weight(1f).fillMaxWidth(),
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
                 contentScale = ContentScale.Inside,
             )
             Surface(
                 shape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp),
                 contentColor = MaterialTheme.colorScheme.background,
-                modifier = Modifier.weight(2f).fillMaxWidth(),
+                modifier = Modifier
+                    .weight(2f)
+                    .fillMaxWidth(),
             ) {
-                Column(modifier = Modifier.fillMaxSize().padding(10.dp)) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(10.dp),
+                ) {
                     Spacer(Modifier.size(15.dp))
                     Text(
-                        stringResource(R.string.action_sign_in_email),
+                        stringResource(R.string.action_sign_in_username),
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                         style = MaterialTheme.typography.headlineLarge,
                         color = MaterialTheme.colorScheme.onSurface,
@@ -149,7 +157,7 @@ fun LoginScreenContent(
                         onClick = onLogin,
                     ) {
                         Text(
-                            text = stringResource(R.string.prompt_password),
+                            text = stringResource(R.string.action_sing_in),
                             color = Color.White,
                         )
                     }
@@ -159,9 +167,16 @@ fun LoginScreenContent(
 
         if (state.showDialog) {
             SimpleAlertDialog(
-                text = state.error ?: state.data?.lastName.orEmpty(),
+                text = state.error ?: stringResource(
+                    id = R.string.label_welcome_back,
+                    state.data?.fullName.orEmpty(),
+                ),
                 onClick = resetLogin,
+                isError = state.error != null,
             )
+        }
+        if (state.isLoading) {
+            Loader()
         }
     }
 }

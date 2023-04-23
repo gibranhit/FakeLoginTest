@@ -9,4 +9,6 @@ data class LoginData(
     val lastName: String? = "",
     val token: String? = "",
     val username: String? = ""
-)
+) {
+    val fullName = "$firstName $lastName"
+}

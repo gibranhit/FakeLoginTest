@@ -6,7 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -15,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -25,6 +27,7 @@ import com.gibranreyes.fakelogintest.R
 fun SimpleAlertDialog(
     text: String,
     onClick: () -> Unit,
+    isError: Boolean,
 ) {
     AlertDialog(
         modifier = Modifier
@@ -38,16 +41,16 @@ fun SimpleAlertDialog(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Icon(
-                    imageVector = Icons.Default.Info,
+                    imageVector = if (isError) Icons.Default.Warning else Icons.Default.Check,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
+                    tint = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(50.dp),
                 )
                 Spacer(Modifier.size(15.dp))
                 Text(
                     text = text,
                     modifier = Modifier.align(Alignment.CenterHorizontally),
-                    style = MaterialTheme.typography.headlineMedium,
+                    style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center,
                 )
@@ -64,8 +67,8 @@ fun SimpleAlertDialog(
                 onClick = onClick,
             ) {
                 Text(
-                    text = stringResource(R.string.prompt_password),
-                    color = MaterialTheme.colorScheme.onSurface,
+                    text = stringResource(R.string.action_ok),
+                    color = Color.White,
                 )
             }
         },
