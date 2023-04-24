@@ -26,7 +26,8 @@ class AuthRepositoryImpl @Inject constructor(
         password: String,
     ): Flow<Outcome<LoginResponse>> {
         return flow {
-            val response = authServices.login(LoginRequest(email, password))
+            val request = LoginRequest(email, password)
+            val response = authServices.login(request)
             response.suspendOnSuccess {
                 emit(Outcome.Success(this.data))
             }.suspendOnError {

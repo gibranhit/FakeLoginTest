@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 
 object ServiceConfiguration {
 
-    private const val TIMEOUT: Long = 30
+    const val TIMEOUT: Long = 30
 
     private val moshiFactory by lazy {
         val moshi = Moshi.Builder()
