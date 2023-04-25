@@ -31,24 +31,20 @@ As we mentioned before we're taking into account SOLID principles and clean arch
 
 ## Unit tests
 
-Unit tests are located at ```test``` directories.
-
-## Ui tests
-
-Ui tests are located at ```androidTest``` directories.
+Unit tests are located at ```test``` and ```androidTest```directories.
 
 **Test directory**
-- Contains unit tests for the **viewModel**
-- Contains unit tests for the **repository**
-- Contains unit tests for the **useCase**
-- Contains ui test for the **view**
+- Contains unit tests for the **viewModel**, **repository** and **useCase**
+
+**Android test directory**
+- Contains ui test for the **view**. These test must be run using a device or an emulator.
+
 
 ## Build with
 
 * [Kotlin](https://kotlinlang.org/) - Main programming language
 * [MVVM](https://developer.android.com/jetpack/guide) - Architectural pattern used
 * [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - Framework for Dependency Injection
-* [Room](https://developer.android.com/jetpack/androidx/releases/room) - To store local data
 * [Retrofit](https://square.github.io/retrofit/) - To make network requests
 * [Sandwich](https://github.com/skydoves/sandwich) - To modeling Retrofit response and handling exceptions
 * [Coroutines](https://developer.android.com/kotlin/coroutines) - To handle async calls
