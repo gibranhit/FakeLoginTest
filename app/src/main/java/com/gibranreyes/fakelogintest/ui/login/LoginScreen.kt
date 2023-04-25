@@ -31,6 +31,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -47,6 +48,10 @@ import com.gibranreyes.fakelogintest.ui.components.OutlinedTextFieldCustom
 import com.gibranreyes.fakelogintest.ui.components.SimpleAlertDialog
 import com.gibranreyes.fakelogintest.ui.components.TextFieldState
 import com.gibranreyes.fakelogintest.ui.theme.FakeLoginTestTheme
+import com.gibranreyes.fakelogintest.util.TestTags.LOGIN_BUTTON
+import com.gibranreyes.fakelogintest.util.TestTags.PASSWORD_ICON_BUTTON
+import com.gibranreyes.fakelogintest.util.TestTags.PASSWORD_NAME_INPUT
+import com.gibranreyes.fakelogintest.util.TestTags.USER_NAME_INPUT
 
 @Composable
 fun LoginScreen(viewModel: LoginViewModel = hiltViewModel()) {
@@ -114,7 +119,8 @@ fun LoginScreenContent(
                         value = emailTextFieldState,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .focusRequester(emailFocusRequester),
+                            .focusRequester(emailFocusRequester)
+                            .testTag(USER_NAME_INPUT),
                         label = {
                             Text(text = stringResource(R.string.prompt_email))
                         },
@@ -130,14 +136,18 @@ fun LoginScreenContent(
                         value = passwordTextFieldState,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .focusRequester(passwordFocusRequester),
+                            .focusRequester(passwordFocusRequester)
+                            .testTag(PASSWORD_NAME_INPUT),
                         label = {
                             Text(text = stringResource(R.string.prompt_password))
                         },
                         trailingIcon = {
-                            IconButton(onClick = {
-                                passwordVisibility.value = !passwordVisibility.value
-                            }) {
+                            IconButton(
+                                onClick = {
+                                    passwordVisibility.value = !passwordVisibility.value
+                                },
+                                modifier = Modifier.testTag(PASSWORD_ICON_BUTTON),
+                            ) {
                                 Icon(
                                     imageVector = if (passwordVisibility.value) Icons.Default.VisibilityOff else Icons.Default.Visibility,
                                     contentDescription = "visibility",
@@ -153,7 +163,9 @@ fun LoginScreenContent(
                     )
                     Spacer(Modifier.size(15.dp))
                     Button(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .testTag(LOGIN_BUTTON),
                         onClick = onLogin,
                     ) {
                         Text(

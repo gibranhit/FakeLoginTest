@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
@@ -16,6 +17,7 @@ import com.airbnb.lottie.compose.LottieConstants.IterateForever
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.gibranreyes.fakelogintest.R
+import com.gibranreyes.fakelogintest.util.TestTags.LOADER
 
 @Composable
 fun Loader(
@@ -25,7 +27,8 @@ fun Loader(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(R.color.bg_lottie_loader)),
+            .background(colorResource(R.color.bg_lottie_loader))
+            .testTag(LOADER),
         contentAlignment,
         propagateMinConstraints,
     ) {

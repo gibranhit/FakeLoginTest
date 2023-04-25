@@ -17,11 +17,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.gibranreyes.fakelogintest.R
+import com.gibranreyes.fakelogintest.util.TestTags.ALERT_DIALOG
+import com.gibranreyes.fakelogintest.util.TestTags.BUTTON_DIALOG
+import com.gibranreyes.fakelogintest.util.TestTags.ICON_DIALOG
+import com.gibranreyes.fakelogintest.util.TestTags.TITLE_DIALOG
 
 @Composable
 fun SimpleAlertDialog(
@@ -31,7 +36,8 @@ fun SimpleAlertDialog(
 ) {
     AlertDialog(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .testTag(ALERT_DIALOG),
         onDismissRequest = onClick,
         text = {
             Column(
@@ -42,14 +48,18 @@ fun SimpleAlertDialog(
             ) {
                 Icon(
                     imageVector = if (isError) Icons.Default.Warning else Icons.Default.Check,
-                    contentDescription = null,
+                    contentDescription = text,
                     tint = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(50.dp),
+                    modifier = Modifier
+                        .size(50.dp)
+                        .testTag(ICON_DIALOG),
                 )
                 Spacer(Modifier.size(15.dp))
                 Text(
                     text = text,
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .testTag(TITLE_DIALOG),
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center,
@@ -63,7 +73,9 @@ fun SimpleAlertDialog(
         ),
         confirmButton = {
             Button(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag(BUTTON_DIALOG),
                 onClick = onClick,
             ) {
                 Text(
